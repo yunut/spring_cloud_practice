@@ -1,0 +1,31 @@
+eureka:
+  client: 
+    register-with-eureka: true 
+    fetch-registry: true 
+    service-url:
+      defaultZone: ${eureka_servers:http://localhost:8761/eureka}
+
+ribbon:
+  eureka:
+    enabled: true
+  MaxAutoRetries: 3                 #동일 서비스 연결시도 횟수: 최소 1번 이상으로 지정  
+  MaxAutoRetriesNextServer: 3       #다음 서비스 연결 시도 횟수: 대상 서비스 수 이상으로 지정    
+  OkToRetryOnAllOperations: true    #Retry 사용 여부: Failover하려면 true로 지정 
+  ConnectTimeout: 5000
+  ReadTimeout: 5000  
+  RetryableStatusCodes: 503, 408, 500, 404
+  
+spring:
+  rabbitmq:
+    host: ${mq_host:localhost}
+    port: ${mq_port:5672}
+    username: ${mq_id:guest}
+    password: ${mq_pw:guest}
+
+management:
+  security: 
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: '*'
